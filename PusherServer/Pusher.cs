@@ -130,7 +130,7 @@ namespace PusherServer
 
             if (string.IsNullOrEmpty(options.SocketId) == false)
             {
-                bodyData.socket_id = options.SocketId;
+                bodyData.socket_id = options.SocketId.Split(':')[0];
             }
 
             IRestResponse response = ExecuteTrigger(channelNames, eventName, bodyData);

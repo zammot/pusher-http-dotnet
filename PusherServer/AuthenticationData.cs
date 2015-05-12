@@ -19,8 +19,8 @@ namespace PusherServer
         {
             _appKey = appKey;
             _appSecret = appSecret;
-            _channelName = channelName;
-            _socketId = socketId;
+            _channelName = channelName.Split(':')[0];
+            _socketId = socketId.Split(':')[0];
         }
 
         public AuthenticationData(string appKey, string appSecret, string channelName, string socketId, PresenceChannelData presenceData):

@@ -218,6 +218,29 @@ namespace PusherServer.Tests.UnitTests
         }
 
         [Test]
+        public void socket_id_parameter_should_not_contain_separator()
+        {
+            var expectedSocketId = "343.324";
+
+            ITriggerResult result =
+                _pusher.Trigger(
+                    channelName,
+                    eventName,
+                    eventData,
+                    new TriggerOptions()
+                    {
+                        SocketId = "343.324:ahoi"
+                    }
+                );
+
+            _subClient.Received().Execute(
+                Arg.Is<IRestRequest>(
+                    x => CheckRequestContainsSocketIdParameter(x, expectedSocketId)
+                )
+            );
+        }
+
+        [Test]
         public void on_a_multiple_channels_the_socket_id_parameter_should_be_present_in_the_querystring()
         {
             var expectedSocketId = "some_socket_id";

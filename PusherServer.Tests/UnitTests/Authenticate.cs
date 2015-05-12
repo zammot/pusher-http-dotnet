@@ -12,13 +12,25 @@ namespace PusherServer.Tests.UnitTests
         [Test]
         public void the_auth_response_is_valid()
         {
-            string channelName = "my-channel";
-            string socketId = "some_socket_id";
+            string channelname = "my-channel";
+            string socketid = "some_socket_id";
 
-            string expectedAuthString = Config.AppKey + ":" + CreateSignedString(channelName, socketId);
+            string expectedauthstring = config.appkey + ":" + createsignedstring(channelname, socketid);
 
-            IAuthenticationData result = _pusher.Authenticate(channelName, socketId);
-            Assert.AreEqual(expectedAuthString, result.auth);
+            iauthenticationdata result = _pusher.authenticate(channelname, socketid);
+            assert.areequal(expectedauthstring, result.auth);
+        }
+
+        [Test]
+        public void the_auth_response_sanitizes_the_channel_and_socket_id()
+        {
+            string channelname = "my-channel:ahoi";
+            string socketid = "343.11:ahoi";
+
+            string expectedauthstring = config.appkey + ":" + createsignedstring("my-channel", "343.11");
+
+            iauthenticationdata result = _pusher.authenticate(channelname, socketid);
+            assert.areequal(expectedauthstring, result.auth);
         }
 
         private string CreateSignedString(string channelName, string socketId)
